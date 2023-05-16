@@ -1,5 +1,9 @@
 {
   "dependencies": {
     "vite-plugin-elm": "^2.8.0"
+  },
+  "devDependencies": {
+    "elm-format": "^0.8.7",
+    "elm-review": "^2.10.2"
   }
 }
