@@ -24,11 +24,12 @@ const marvelController = {
                     description: character.description,
                     thumbnail: {
                         path: character.thumbnail.path,
+                        extension: character.thumbnail.extension,
                     },
                 };
                 return limitedCharacter;
             });
-            console.log(limitedCharactersArray);
+            //   console.log(limitedCharactersArray);
             res.status(200).json(limitedCharactersArray);
         }
         catch (error) {

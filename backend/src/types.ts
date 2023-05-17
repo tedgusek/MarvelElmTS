@@ -1,3 +1,5 @@
+import { Response } from 'express';
+
 interface Character {
   name: string;
   description: string;
@@ -9,4 +11,9 @@ interface Thumbnail {
   extension: string;
 }
 
-export { Character, Thumbnail };
+interface CustomResponse extends Response {
+  status(code: number): CustomResponse;
+  json(data: any): CustomResponse;
+}
+
+export { Character, Thumbnail, CustomResponse };

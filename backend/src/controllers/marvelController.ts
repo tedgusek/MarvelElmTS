@@ -2,21 +2,7 @@ import { Request, Response } from 'express';
 import axios from 'axios';
 import md5 from 'md5';
 import dotenv from 'dotenv';
-import { Character } from '../types';
-
-interface CustomResponse extends Response {
-  status(code: number): CustomResponse;
-  json(data: any): CustomResponse;
-}
-
-// interface Character {
-//   name: string;
-//   description: string;
-//   thumbnail: {
-//     path: string;
-//     extension: string;
-//   };
-// }
+import { Character, CustomResponse } from '../types';
 
 const marvelController = {
   async getCharacters(req: Request, res: Response): Promise<void> {
