@@ -11,8 +11,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // );
 // module.exports = router;
 const express_1 = __importDefault(require("express"));
+// import { RequestHandler } from 'express-serve-static-core';
+// import { marvelController } from '../controllers/marvelController';
 const marvelController_1 = __importDefault(require("../controllers/marvelController"));
 const router = express_1.default.Router();
-router.get('/', marvelController_1.default.getCharachters, (req, res) => res.status(200).json(res.locals.data));
+router.get('/characters', marvelController_1.default.getCharacters
+// (req: Request, res: Response) => res.status(200).json(res.locals.data)
+);
 exports.default = router;
 //# sourceMappingURL=marvelApi.js.map

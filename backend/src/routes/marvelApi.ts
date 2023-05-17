@@ -12,13 +12,14 @@
 import express, { Request, Response, Router } from 'express';
 // import { RequestHandler } from 'express-serve-static-core';
 
-import { marvelController } from '../controllers/marvelController';
+// import { marvelController } from '../controllers/marvelController';
+import marvelController from '../controllers/marvelController';
 
 const router: Router = express.Router();
 
 router.get(
   '/characters',
-  marvelController
+  marvelController.getCharacters
   // (req: Request, res: Response) => res.status(200).json(res.locals.data)
 );
 

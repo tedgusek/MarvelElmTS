@@ -47,17 +47,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // });
 // export default app;
 const express_1 = __importDefault(require("express"));
-const marvelController_1 = require("./controllers/marvelController");
+// import { getCharacters } from './controllers/marvelController';
+const marvelController_1 = __importDefault(require("./controllers/marvelController"));
 const app = (0, express_1.default)();
-const PORT = 3000;
+const PORT = 5173;
 // Middleware
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 // Routes
-app.get('/api/characters', marvelController_1.marvelController);
+app.get('/characters', marvelController_1.default.getCharacters);
 // Error handling middleware
 app.use((err, req, res) => {
-    console.error(err.stack);
+    console.log(err.stack);
     res.status(500).json({ error: 'Internal Server Error' });
 });
 // Start the server

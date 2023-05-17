@@ -51,7 +51,8 @@
 
 // export default app;
 import express, { Express, Request, Response, NextFunction } from 'express';
-import { marvelController } from './controllers/marvelController';
+// import { getCharacters } from './controllers/marvelController';
+import marvelController from './controllers/marvelController';
 
 interface CustomResponse extends Response {
   status(code: number): CustomResponse;
@@ -59,18 +60,18 @@ interface CustomResponse extends Response {
 }
 
 const app: Express = express();
-const PORT: number = 3000;
+const PORT: number = 5173;
 
 // Middleware
 app.use(express.json() as NextFunction);
 app.use(express.urlencoded({ extended: true }) as NextFunction);
 
 // Routes
-app.get('/api/characters', marvelController);
+app.get('/characters', marvelController.getCharacters);
 
 // Error handling middleware
 app.use((err: any, req: Request, res: Response) => {
-  console.error(err.stack);
+  console.log(err.stack);
   (res as CustomResponse).status(500).json({ error: 'Internal Server Error' });
 });
 
