@@ -20,15 +20,13 @@ export async function marvelController(
   const ts = new Date().getTime().toString();
   const hash = md5(ts + apiKey + publicKey);
 
-  const endpoint = `v1/public/comics?ts=${ts}&apikey=${publicKey}&hash=${hash}`; // Replace with your desired endpoint path
+  const endpoint = `v1/public/comics?ts=${ts}&apikey=${publicKey}&hash=${hash}`;
 
   try {
     const response = await axios.get(
       `http(s)://gateway.marvel.com/${endpoint}`
     );
     const characters = response.data;
-
-    // const characters = response.data.results; // Adjust this based on the Marvel API response structure
 
     (res as CustomResponse).status(200).json(characters);
   } catch (error) {

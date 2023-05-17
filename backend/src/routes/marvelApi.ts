@@ -10,16 +10,16 @@
 
 // module.exports = router;
 import express, { Request, Response, Router } from 'express';
-import { RequestHandler } from 'express-serve-static-core';
+// import { RequestHandler } from 'express-serve-static-core';
 
-import marvelController from '../controllers/marvelController';
+import { marvelController } from '../controllers/marvelController';
 
 const router: Router = express.Router();
 
 router.get(
-  '/',
-  marvelController.getCharachters,
-  (req: Request, res: Response) => res.status(200).json(res.locals.data)
+  '/characters',
+  marvelController
+  // (req: Request, res: Response) => res.status(200).json(res.locals.data)
 );
 
 export default router;
