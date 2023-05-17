@@ -1,7 +1,4 @@
 "use strict";
-// import { Request, Response } from 'express';
-// import axios from 'axios';
-// import md5 from 'md5';
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -17,13 +14,22 @@ const marvelController = {
             const publicKey = process.env.MARVEL_API_KEY_PUBLIC;
             const ts = new Date().getTime().toString();
             const hash = (0, md5_1.default)(ts + apiKey + publicKey);
-            const endpoint = `v1/public/characters?ts=${ts}&apikey=${publicKey}&hash=${hash}`; // Replace with your desired endpoint path
-            //   const endpoint = `v1/public/comics/82967/characters?ts=${ts}&apikey=${publicKey}&hash=${hash}`;
-            const response = await axios_1.default.get(`http://gateway.marvel.com/${endpoint}`); // took out (s) after http
-            const charactersArray = response.data.data.results;
-            console.log(charactersArray[0].name);
-            // const charactersArray = response.data.results; // Adjust this based on the Marvel API response structure
-            res.status(200).json(charactersArray);
+            const endpoint = `v1/public/characters?ts=${ts}&apikey=${publicKey}&hash=${hash}`;
+            const response = await axios_1.default.get(`http://gateway.marvel.com/${endpoint}`);
+            const charactersArray = response.data.data.results; //returns an array of objects, we want to use the properties: 'name', 'description', 'thumbnail.path'
+            //   console.log(charactersArray[0].name);
+            const limitedCharactersArray = charactersArray.map((character) => {
+                const limitedCharacter = {
+                    name: character.name,
+                    description: character.description,
+                    thumbnail: {
+                        path: character.thumbnail.path,
+                    },
+                };
+                return limitedCharacter;
+            });
+            console.log(limitedCharactersArray);
+            res.status(200).json(limitedCharactersArray);
         }
         catch (error) {
             console.log('Error retrieving charactersArray:', error);

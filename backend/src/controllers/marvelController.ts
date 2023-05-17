@@ -1,13 +1,22 @@
 import { Request, Response } from 'express';
 import axios from 'axios';
 import md5 from 'md5';
-
 import dotenv from 'dotenv';
+import { Character } from '../types';
 
 interface CustomResponse extends Response {
   status(code: number): CustomResponse;
   json(data: any): CustomResponse;
 }
+
+// interface Character {
+//   name: string;
+//   description: string;
+//   thumbnail: {
+//     path: string;
+//     extension: string;
+//   };
+// }
 
 const marvelController = {
   async getCharacters(req: Request, res: Response): Promise<void> {
@@ -19,16 +28,27 @@ const marvelController = {
       const ts = new Date().getTime().toString();
       const hash = md5(ts + apiKey + publicKey);
 
-      const endpoint = `v1/public/characters?ts=${ts}&apikey=${publicKey}&hash=${hash}`; // Replace with your desired endpoint path
-      //   const endpoint = `v1/public/comics/82967/characters?ts=${ts}&apikey=${publicKey}&hash=${hash}`;
+      const endpoint = `v1/public/characters?ts=${ts}&apikey=${publicKey}&hash=${hash}`;
 
-      const response = await axios.get(`http://gateway.marvel.com/${endpoint}`); // took out (s) after http
-      const charactersArray = response.data.data.results; //returns an array of objects, we want to use the properties: 'name', 'description', 'thumbnail.path'
-      console.log(charactersArray[0].name);
+      const response = await axios.get(`http://gateway.marvel.com/${endpoint}`);
+      const charactersArray: Character[] = response.data.data.results; //returns an array of objects, we want to use the properties: 'name', 'description', 'thumbnail.path'
+      //   console.log(charactersArray[0].name);
 
-      // const charactersArray = response.data.results; // Adjust this based on the Marvel API response structure
+      const limitedCharactersArray = charactersArray.map((character) => {
+        const limitedCharacter: Character = {
+          name: character.name,
+          description: character.description,
+          thumbnail: {
+            path: character.thumbnail.path,
+            extension: character.thumbnail.extension,
+          },
+        };
+        return limitedCharacter;
+      });
 
-      (res as CustomResponse).status(200).json(charactersArray);
+      //   console.log(limitedCharactersArray);
+
+      (res as CustomResponse).status(200).json(limitedCharactersArray);
     } catch (error) {
       console.log('Error retrieving charactersArray:', error);
       (res as CustomResponse)
