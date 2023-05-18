@@ -1,17 +1,134 @@
-module Main exposing (..)
+-- module Main exposing (..)
+
+-- import Browser
+-- import Html exposing (Html, div, img, p, text)
+-- import Html.Attributes exposing (src)
+-- import Http
+-- import Json.Decode as Decode
+-- import Task
+
+
+-- type alias Character =
+--     { name : String
+--     , description : String
+--     , thumbnail : { path : String }
+--     }
+
+
+-- type alias Model =
+--     { characters : List Character
+--     , errorMessage : Maybe String
+--     }
+
+
+-- initialModel : Model
+-- initialModel =
+--     { characters = []
+--     , errorMessage = Nothing
+--     }
+
+
+-- type Msg
+--     = CharactersReceived (Result Http.Error (List Character))
+
+
+-- fetchCharacters : Task.Task Http.Error (List Character)
+-- fetchCharacters =
+--     Http.get
+--         { url = "http://localhost:5173/characters"
+--         , expect = Http.expectJson CharactersReceived (Decode.list characterDecoder)
+--         }
+
+
+-- characterDecoder : Decode.Decoder Character
+-- characterDecoder =
+--     Decode.map3 Character
+--         (Decode.field "name" Decode.string)
+--         (Decode.field "description" Decode.string)
+--         (Decode.field "thumbnail" (Decode.map (\path -> { path = path }) (Decode.field "path" Decode.string)))
+
+
+-- update : Msg -> Model -> ( Model, Cmd Msg )
+-- update msg model =
+--     case msg of
+--         CharactersReceived (Ok receivedCharacters) ->
+--             ( { model | characters = receivedCharacters }, Cmd.none )
+
+--         CharactersReceived (Err error) ->
+--             ( { model | errorMessage = Just (Debug.toString error) }, Cmd.none )
+
+
+-- viewCharacter : Character -> Html msg
+-- viewCharacter character =
+--     div []
+--         [ div [] [ text character.name ]
+--         , div [] [ text character.description ]
+--         , img [ src character.thumbnail.path ] []
+--         ]
+
+
+-- view : Model -> Html Msg
+-- view model =
+--     case model.errorMessage of
+--         Just errorMessage ->
+--             div [] [ text ("Error: " ++ errorMessage) ]
+
+--         Nothing ->
+--             div []
+--                 (List.map viewCharacter model.characters)
+
+
+-- main =
+--     Browser.element
+--         { init = always init
+--         , update = update
+--         , subscriptions = subscriptions
+--         , view = view
+--         }
+
+
+-- init : ( Model, Cmd Msg )
+-- init =
+--     ( initialModel, fetchCharacters )
+    
+
+
+-- subscriptions : Model -> Sub Msg
+-- subscriptions _ =
+--     Sub.none
+
+
+-- -- Helper functions for decoding and encoding JSON
+
+-- decodeMsg : String -> Msg
+-- decodeMsg json =
+--     case Decode.decodeString characterListDecoder json of
+--         Ok characters -> CharactersReceived (Ok characters)
+--         Err err -> CharactersReceived (Err (Http.BadBody err))
+
+
+-- characterListDecoder : Decode.Decoder (List Character)
+-- characterListDecoder =
+--     Decode.list characterDecoder
+
+module Main exposing (main)
 
 import Browser
-import Html exposing (Html, div, img, p, text)
+import Html exposing (Html, div, img, text)
 import Html.Attributes exposing (src)
-import Http
+import Http exposing (Error(..))
 import Json.Decode as Decode
-import Task
 
 
 type alias Character =
     { name : String
     , description : String
-    , thumbnail : { path : String }
+    , thumbnail : Thumbnail
+    }
+
+
+type alias Thumbnail =
+    { path : String
     }
 
 
@@ -32,8 +149,9 @@ type Msg
     = CharactersReceived (Result Http.Error (List Character))
 
 
-fetchCharacters : Task.Task Http.Error (List Character)
+fetchCharacters : Cmd Msg
 fetchCharacters =
+    -- Http.get returns a Cmd Msg!
     Http.get
         { url = "http://localhost:5173/characters"
         , expect = Http.expectJson CharactersReceived (Decode.list characterDecoder)
@@ -45,17 +163,32 @@ characterDecoder =
     Decode.map3 Character
         (Decode.field "name" Decode.string)
         (Decode.field "description" Decode.string)
-        (Decode.field "thumbnail" (Decode.map (\path -> { path = path }) (Decode.field "path" Decode.string)))
+        (Decode.field "thumbnail"
+            (Decode.map Thumbnail (Decode.field "path" Decode.string))
+        )
 
 
-update : Msg -> Model -> ( Model, Cmd Msg )
+update : ( Msg -> Model -> ( Model, Cmd Msg ) )
 update msg model =
     case msg of
         CharactersReceived (Ok receivedCharacters) ->
             ( { model | characters = receivedCharacters }, Cmd.none )
 
         CharactersReceived (Err error) ->
-            ( { model | errorMessage = Just (Debug.toString error) }, Cmd.none )
+            ( { model
+                | errorMessage =
+                    Just
+                        (case error of
+                            BadUrl _ ->
+                                "bad url"
+
+                            _ ->
+                                -- you should pattern match on all cases, ideally in a separate function
+                                "Other"
+                        )
+              }
+            , Cmd.none
+            )
 
 
 viewCharacter : Character -> Html msg
@@ -78,6 +211,7 @@ view model =
                 (List.map viewCharacter model.characters)
 
 
+main : Program () Model Msg
 main =
     Browser.element
         { init = init
@@ -87,10 +221,12 @@ main =
         }
 
 
-init : ( Model, Cmd Msg )
-init =
-    ( initialModel, Task.perform fetchCharacters )
-    
+init : () -> ( Model, Cmd Msg )
+init _ =
+    ( initialModel, fetchCharacters )
+-- init : ( Model, Cmd Msg )
+-- init =
+--     ( initialModel, fetchCharacters )
 
 
 subscriptions : Model -> Sub Msg
@@ -98,16 +234,6 @@ subscriptions _ =
     Sub.none
 
 
--- Helper functions for decoding and encoding JSON
-
-decodeMsg : String -> Msg
-decodeMsg json =
-    case Decode.decodeString characterListDecoder json of
-        Ok characters -> CharactersReceived (Ok characters)
-        Err err -> CharactersReceived (Err (Http.BadBody err))
-
-
 characterListDecoder : Decode.Decoder (List Character)
 characterListDecoder =
     Decode.list characterDecoder
-
