@@ -26,7 +26,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "start": "elm-live src/Main.elm --hot --start-page=public/custom.html -- --output=public/app.js",
-    "start-server": "node backend/src/server.ts",
+    "start-server": "ts-node backend/src/server.ts",
     "start-client": "vite"
   },
   "keywords": [],
