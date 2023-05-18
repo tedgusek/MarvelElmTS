@@ -7,6 +7,7 @@
     "express": "^4.18.2",
     "express-serve-static-core": "^0.1.1",
     "md5": "^2.3.0",
+    "path": "^0.12.7",
     "typescript": "^5.0.4",
     "vite-plugin-elm": "^2.8.0"
   },
