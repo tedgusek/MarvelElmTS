@@ -1,16 +1,38 @@
-<!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href="styles.css" />
+
     <meta charset="UTF-8" />
-    <title>Elm App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Marvel Elm App</title>
+    <style>
+      /* you can style your program here */
+    </style>
   </head>
   <body>
-    <div id="elm-app"></div>
-    <script src="elm.js"></script>
+    <header>
+      <h1>Welcome to the Marvel Elm App!</h1>
+    </header>
+    <!-- if development -->
+    <script type="module" src="http://localhost:5173/@vite/client"></script>
+    <script type="module" src="http://localhost:5173/main.js"></script>
+    <!-- <script type="module" src="/src/elm.js"></script> -->
+
+    <!-- <main></main> -->
+    <!-- <script>
+    //   var app = Elm.Main.init({ node: document.querySelector('main') });
+        
+      // you can use ports and stuff here
+    </script> -->
+    <!-- <div id="Main"></div> -->
+
+    <div id="elm-container">hey</div>
     <script>
-      var app = Elm.Main.init({
-        node: document.getElementById('elm-app'),
+      let app = Elm.Main.init({
+        node: document.getElementById('elm-container'),
       });
     </script>
+    <script src="elm.js"></script>
   </body>
 </html>
