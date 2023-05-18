@@ -20,12 +20,15 @@
   "description": "Displaying Marvel characters via Marvel API in an Elm app with TS backend",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "vite",
+    "dev": "concurrently \"npm run start-server\" \"npm run start-client\"",
     "build": "vite build",
     "preview": "vite preview",
-    "start": "elm-live src/Main.elm --hot --start-page=public/custom.html -- --output=public/app.js"
+    "start": "elm-live src/Main.elm --hot --start-page=public/custom.html -- --output=public/app.js",
+    "start-server": "node backend/src/server.ts",
+    "start-client": "vite"
   },
   "keywords": [],
   "author": "",

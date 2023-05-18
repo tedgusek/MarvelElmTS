@@ -1,6 +1,8 @@
 import express, { Express, Request, Response, NextFunction } from 'express';
 import marvelController from './controllers/marvelController';
 import { CustomResponse } from './types';
+// const express = require('exress');
+// const marvelController = require('./controllers/marvelController');
 
 const app: Express = express();
 const PORT: number = 5173;
