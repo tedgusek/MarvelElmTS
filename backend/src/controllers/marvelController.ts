@@ -34,7 +34,10 @@ const marvelController = {
 
       //   console.log(limitedCharactersArray);
 
-      (res as CustomResponse).status(200).json(limitedCharactersArray);
+      (res as CustomResponse)
+        .setHeader('Access-Control-Allow-Origin', null)
+        .status(200)
+        .json(limitedCharactersArray);
     } catch (error) {
       console.log('Error retrieving charactersArray:', error);
       (res as CustomResponse)

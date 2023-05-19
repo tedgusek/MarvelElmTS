@@ -19,11 +19,12 @@ app.use(express.urlencoded({ extended: true }) as NextFunction);
 app.get('/characters', marvelController.getCharacters);
 
 // Error handling middleware
-app.use((err: any, req: Request, res: Response) => {
-  console.log(err.stack);
-  (res as CustomResponse).status(500).json({ error: 'Internal Server Error' });
-  return;
-});
+//need to rework this
+// app.use((err: any, req: Request, res: Response) => {
+//   // console.log(err.stack);
+//   (res as CustomResponse).status(500).json({ error: 'Internal Server Error' });
+//   // return;
+// });
 
 // Start the server
 app.listen(PORT, () => {

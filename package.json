@@ -20,7 +20,7 @@
   "name": "marvelelmts",
   "description": "Displaying Marvel characters via Marvel API in an Elm app with TS backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "concurrently \"npm run start-server\" \"npm run start-elm-client\"",
