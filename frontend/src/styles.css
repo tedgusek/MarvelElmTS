@@ -1,0 +1,31 @@
+html {
+  box-sizing: border-box;
+  font: 62.5% 'Source Sans Pro', sans-serif;
+}
+body {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background: rgba(22, 22, 22, 0.915);
+  color: #e4e4e4;
+}
+div {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  width: 50%;
+  padding-top: 20px;
+  padding-bottom: 20;
+  background-color: rgb(104, 104, 104);
+  color: white;
+  border: 2px;
+  border-color: black;
+  border-radius: 25px;
+  background: rgba(116, 115, 115, 0.915);
+  color: #e4e4e4;
+}
+#elm-container {
+  background-color: aqua;
+  width: 50px;
+  border: 2px;
+  border-radius: 25px;
+  color: black;
+}
