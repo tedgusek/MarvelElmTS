@@ -20,7 +20,7 @@ export default defineConfig({
   build: {
     manifest: true,
     rollupOptions: {
-      input: './frontend/src/index.js',
+      input: './frontend/src/Main.elm',
     },
     outDir: 'build',
     target: 'es2020',
