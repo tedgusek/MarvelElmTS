@@ -5,6 +5,7 @@ const ALLOWED_ORIGIN = null;
 interface Character {
   name: string;
   description: string;
+  //   thumbnail: string;
   thumbnail: Thumbnail;
 }
 

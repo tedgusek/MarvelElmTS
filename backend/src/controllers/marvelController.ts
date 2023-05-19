@@ -25,7 +25,7 @@ const marvelController = {
           name: character.name,
           description: character.description,
           thumbnail: {
-            path: character.thumbnail.path,
+            path: `${character.thumbnail.path}.${character.thumbnail.extension}`,
             extension: character.thumbnail.extension,
           },
         };
