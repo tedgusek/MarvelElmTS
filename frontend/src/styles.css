@@ -3,14 +3,52 @@ html {
   font: 62.5% 'Source Sans Pro', sans-serif;
 }
 body {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
   padding-left: 1rem;
   padding-right: 1rem;
   background: rgba(22, 22, 22, 0.915);
   color: #e4e4e4;
 }
+/* #elm-container {
+  display: block;
+  background-color: aqua;
+  width: 50px;
+  border: 2px;
+  border-radius: 25px;
+  color: black;
+} */
+#card {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  width: 150px;
+  background-color: rgb(21, 21, 21);
+}
+
+#name {
+  padding: 0;
+  margin: 0;
+}
+
+#description {
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  width: 125px;
+}
+/* #empty {
+  display: none;
+} */
 div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding-left: 1rem;
   padding-right: 1rem;
+  margin-top: 15px;
+  margin-bottom: 15px;
   width: 50%;
   padding-top: 20px;
   padding-bottom: 20;
@@ -22,10 +60,10 @@ div {
   background: rgba(116, 115, 115, 0.915);
   color: #e4e4e4;
 }
-#elm-container {
-  background-color: aqua;
-  width: 50px;
-  border: 2px;
-  border-radius: 25px;
-  color: black;
+
+img {
+  width: 150px;
+  height: auto;
+  border-radius: 15px;
+  margin: 5px;
 }
