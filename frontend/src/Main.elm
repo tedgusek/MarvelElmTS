@@ -2,7 +2,7 @@ module Main exposing (main)
 
 import Browser
 import Html exposing (Html, div, img, text)
-import Html.Attributes exposing (src)
+import Html.Attributes exposing (src, id)
 import Http exposing (Error(..))
 import Json.Decode as Decode
 
@@ -80,9 +80,9 @@ update msg model =
 
 viewCharacter : Character -> Html msg
 viewCharacter character =
-    div []
-        [ div [] [ text character.name ]
-        , div [] [ text character.description ]
+    div [ id "card" ]
+        [ div [ id "name" ] [ text character.name ]
+        , div [ id "description" ] [ text character.description ]
         , img [ src character.thumbnail.path ] []
         ]
 
@@ -94,7 +94,7 @@ view model =
             div [] [ text ("Error: " ++ errorMessage) ]
 
         Nothing ->
-            div []
+            div [ id "empty" ]
                 (List.map viewCharacter model.characters)
 
 
