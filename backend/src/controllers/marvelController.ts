@@ -25,7 +25,7 @@ const marvelController = {
           name: character.name,
           description: character.description,
           thumbnail: {
-            path: character.thumbnail.path,
+            path: `${character.thumbnail.path}.${character.thumbnail.extension}`,
             extension: character.thumbnail.extension,
           },
         };
@@ -34,7 +34,10 @@ const marvelController = {
 
       //   console.log(limitedCharactersArray);
 
-      (res as CustomResponse).status(200).json(limitedCharactersArray);
+      (res as CustomResponse)
+        .setHeader('Access-Control-Allow-Origin', null)
+        .status(200)
+        .json(limitedCharactersArray);
     } catch (error) {
       console.log('Error retrieving charactersArray:', error);
       (res as CustomResponse)
