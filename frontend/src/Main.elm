@@ -5,6 +5,7 @@ import Html exposing (Html, div, img, text)
 import Html.Attributes exposing (src, id)
 import Http exposing (Error(..))
 import Json.Decode as Decode
+import Css exposing (..)
 
 
 type alias Character =
